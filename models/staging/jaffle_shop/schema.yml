@@ -12,6 +12,11 @@ models:
           - not_null
   - name: stg_orders
     columns: 
+      - name: customer_id
+        tests:
+          - relationships:
+              to: stg_customers
+              field: customer_id
       - name: status
         tests: 
           - accepted_values:
