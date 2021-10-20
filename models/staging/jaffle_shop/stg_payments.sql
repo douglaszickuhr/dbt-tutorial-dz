@@ -1,10 +1,8 @@
-with payments as (
-    SELECT
-    "ORDERID" as order_id,
-    cast(SUM("AMOUNT") as double)/100 as payment_amount
-    FROM raw.STRIPE.PAYMENT
-    WHERE STATUS = 'success'
-    GROUP BY order_id
-)
+WITH payments AS
+  (SELECT "ORDERID" AS order_id,
+          cast(SUM("AMOUNT") AS DOUBLE)/ 100 AS payment_amount
+   FROM {{ source("stripe", "payment") }}
+   WHERE STATUS = 'success'
+   GROUP BY order_id)
 
-select * from payments
+SELECT * FROM payments
