@@ -40,7 +40,6 @@ models:
     columns:
       - name: order_id
         tests:
-          - unique
           - not_null
           - relationships:
               to: stg_orders
