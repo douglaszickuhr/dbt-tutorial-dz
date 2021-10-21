@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fact_orders
+    columns:
+      - name: order_id
+        description: Order Unique identifier
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Customer Unique identifier
+        tests:
+          - not_null
+          - relationships:
+              to: dim_customer
+              field: customer_id
+      - name: amount
+        description: Order total amount
+        
+
+  - name: dim_customer
+    columns:
+      - name: customer_id
+        description: Customer Unique identitifer
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        description: Customer's First name
+      - name: last_name
+        description: Customer's Last name
+      - name: first_order_date
+        description: Date when the first order was created
+      - name: most_recent_order_date
+        description: Date when the most recent order was created
+      - name: number_of_orders
+        description: Total number of orders
+      - name: lifetime_value
+        description: Total amount spent by Customer
