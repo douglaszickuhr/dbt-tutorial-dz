@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        description: Customer unique identifier
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: Customer's first name
+        tests:
+          - not_null
+      - name: last_name
+        description: Customer's last name
+  
+  - name: stg_orders
+    columns: 
+      - name: customer_id
+        description: Customer unique identifier. Foreign key to stg_customers
+        tests:
+          - relationships:
+              to: stg_customers
+              field: customer_id
+      - name: status
+        description: "{{ doc('order_status') }}"
+        tests:           
+          - accepted_values:
+              values: 
+                - 'returned'
+                - 'completed' 
+                - 'shipped' 
+                - 'placed' 
+                - 'return_pending'
+      - name: order_date
+        description: Date when the order was created
+  
+  - name: stg_payments
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: stg_orders
+              field: order_id 
+      - name: payment_amount
+        tests:
+          - not_null
+
+

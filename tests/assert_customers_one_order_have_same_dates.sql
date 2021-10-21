@@ -1,0 +1,6 @@
+SELECT 
+    * 
+FROM 
+{{ ref("dim_customer")}}
+WHERE NUMBER_OF_ORDERS = 1
+AND (FIRST_ORDER_DATE <> MOST_RECENT_ORDER_DATE)
