@@ -35,3 +35,9 @@ sources:
         freshness:
           warn_after: {count: 12, period: hour}
           error_after: {count: 5, period: day}
+        columns:
+          - name: paymentmethod
+            description: Method of payment
+            tests:
+            - dbt_expectations.expect_column_values_to_be_in_set:
+                value_set: ['credit_card','coupon','bank_transfer', 'gift_card'] 

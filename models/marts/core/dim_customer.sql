@@ -36,7 +36,9 @@ customer_payments as (
     from {{ref("fact_orders")}}
     group by customer_id
 ),
-
+employees as (
+    select * from {{ ref('employees') }}
+),
 
 final as (
 
@@ -47,12 +49,15 @@ final as (
         customer_orders.first_order_date,
         customer_orders.most_recent_order_date,
         coalesce(customer_orders.number_of_orders, 0) as number_of_orders,
-        coalesce(customer_payments.amount, 0) as lifetime_value
+        coalesce(customer_payments.amount, 0) as lifetime_value,
+        case when employees.employee_id is not null then true else false end as is_employee
+
 
     from customers
 
     left join customer_orders using (customer_id)
     left join customer_payments using (customer_id)
+    left join employees using (customer_id)
 
 )
 
