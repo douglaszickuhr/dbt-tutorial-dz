@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: jaffle_shop
     description: A clone of a Postgres application database
-    database: raw
+    database: jaffle_shop
     tables:
       - name: customers
         description: Raw customers data
@@ -25,11 +25,7 @@ sources:
             tests:
               - unique
               - not_null
-
-  - name: stripe
-    database: raw
-    tables:
-      - name: payment
+      - name: payments
         description: Raw payment data
         loaded_at_field: _BATCHED_AT
         freshness:
